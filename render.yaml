@@ -1,0 +1,17 @@
+# Конфигурация для Render (Blueprint): веб-сервис из Dockerfile + постоянный диск для базы
+services:
+  - type: web
+    name: cloword
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    healthCheckPath: /
+    envVars:
+      - key: CLOWORD_DATA
+        value: /data
+      - key: COOKIE_SECURE
+        value: "1"
+    disk:
+      name: cloword-data
+      mountPath: /data
+      sizeGB: 1

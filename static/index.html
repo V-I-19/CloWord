@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CloWord — вход</title>
+<meta name="description" content="CloWord — текстовый редактор в облаке. Ваши документы на любом устройстве.">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#5b6cff">
+<script src="/js/theme-init.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/pages.css">
+</head>
+<body class="auth-page">
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<button class="icon-btn glass theme-fab" id="themeBtn" type="button"></button>
+
+<main class="auth">
+  <section class="auth-hero">
+    <div class="brand brand-lg"><span class="logo" data-logo="46"></span><span>Clo<b>Word</b></span></div>
+    <h1>Пишите.<br><span class="grad">Где угодно.</span></h1>
+    <p class="lead">Полноценный текстовый редактор в облаке. Документы сохраняются в вашем личном кабинете и открываются на любом компьютере и телефоне.</p>
+    <ul class="features">
+      <li><span class="f-ic" data-i="edit"></span><div><b>Как в Word</b><span>Стили, таблицы, рисунки, списки, колонтитулы, поля и ориентация страницы</span></div></li>
+      <li><span class="f-ic" data-i="devices"></span><div><b>С любого устройства</b><span>Войдите в аккаунт — и все документы с вами</span></div></li>
+      <li><span class="f-ic" data-i="download"></span><div><b>Экспорт в .docx и PDF</b><span>Импорт Word-файлов, печать, HTML и TXT</span></div></li>
+      <li><span class="f-ic" data-i="history"></span><div><b>Автосохранение и версии</b><span>Ничего не потеряется — можно вернуть любую версию</span></div></li>
+    </ul>
+  </section>
+
+  <section class="auth-card glass-strong">
+    <div class="seg" role="tablist">
+      <button type="button" class="active" data-tab="login">Вход</button>
+      <button type="button" data-tab="register">Регистрация</button>
+    </div>
+
+    <form id="loginForm" class="auth-form" novalidate>
+      <h2>С возвращением!</h2>
+      <p class="muted">Войдите, чтобы открыть свои документы</p>
+      <label class="field"><span>E-mail</span>
+        <div class="input-ic"><span data-i="mail" data-size="17"></span><input class="input" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div></label>
+      <label class="field"><span>Пароль</span>
+        <div class="input-ic"><span data-i="lock" data-size="17"></span><input class="input" name="password" type="password" autocomplete="current-password" required placeholder="••••••••">
+        <button type="button" class="eye" data-i="eye" data-size="17" aria-label="Показать пароль"></button></div></label>
+      <div class="form-error" hidden></div>
+      <button class="btn btn-primary btn-block btn-lg" type="submit">Войти</button>
+    </form>
+
+    <form id="registerForm" class="auth-form" novalidate hidden>
+      <h2>Создайте аккаунт</h2>
+      <p class="muted">Бесплатно. Документы будут доступны везде</p>
+      <label class="field"><span>Имя</span>
+        <div class="input-ic"><span data-i="user" data-size="17"></span><input class="input" name="name" autocomplete="name" placeholder="Как к вам обращаться"></div></label>
+      <label class="field"><span>E-mail</span>
+        <div class="input-ic"><span data-i="mail" data-size="17"></span><input class="input" name="email" type="email" autocomplete="email" required placeholder="you@example.com"></div></label>
+      <label class="field"><span>Пароль</span>
+        <div class="input-ic"><span data-i="lock" data-size="17"></span><input class="input" name="password" type="password" autocomplete="new-password" required minlength="6" placeholder="Не короче 6 символов">
+        <button type="button" class="eye" data-i="eye" data-size="17" aria-label="Показать пароль"></button></div></label>
+      <div class="form-error" hidden></div>
+      <button class="btn btn-primary btn-block btn-lg" type="submit">Зарегистрироваться</button>
+    </form>
+  </section>
+</main>
+
+<script src="/js/icons.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/auth.js"></script>
+</body>
+</html>

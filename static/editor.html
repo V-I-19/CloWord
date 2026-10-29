@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CloWord</title>
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#5b6cff">
+<script src="/js/theme-init.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&family=Arimo:ital,wght@0,400;0,700;1,400;1,700&family=Cousine:wght@400;700&family=Caladea:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&family=Open+Sans:ital,wght@0,400;0,700;1,400&family=Montserrat:ital,wght@0,400;0,700;1,400&family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@400;700&family=Comfortaa:wght@400;700&family=Caveat:wght@400;700&display=swap">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/doc.css">
+<link rel="stylesheet" href="/css/editor.css">
+<style id="pageStyle"></style>
+</head>
+<body class="editor-page">
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+<div class="shell">
+  <header class="topbar glass">
+    <a href="/app" class="home-link" title="Мои документы"><span class="logo" data-logo="32"></span></a>
+    <div class="title-wrap">
+      <input id="docTitle" class="doc-title" spellcheck="false" autocomplete="off" aria-label="Название документа" value="">
+      <div class="save-status" id="saveStatus"><span class="ss-ic" data-i="cloud" data-size="14"></span><span class="ss-text">Загрузка…</span></div>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" data-a="find" title="Найти (Ctrl+F)"><span data-i="search"></span></button>
+      <button class="icon-btn hide-sm" data-a="print" title="Печать (Ctrl+P)"><span data-i="printer"></span></button>
+      <button class="btn btn-primary btn-sm" data-a="export-docx" title="Скачать как документ Word"><span data-i="download" data-size="16"></span><span class="hide-xs">.docx</span></button>
+      <button class="icon-btn" id="themeBtn" type="button"></button>
+      <button class="avatar" id="avatarBtn" type="button" title="Аккаунт">?</button>
+    </div>
+  </header>
+
+  <nav class="rtabs" id="rtabs" role="tablist">
+    <button class="rtab rtab-file" data-a="backstage">Файл</button>
+    <button class="rtab active" data-tab="home">Главная</button>
+    <button class="rtab" data-tab="insert">Вставка</button>
+    <button class="rtab" data-tab="layout">Макет</button>
+    <button class="rtab" data-tab="review">Рецензирование</button>
+    <button class="rtab" data-tab="view">Вид</button>
+    <span class="flex1"></span>
+    <button class="icon-btn sm" data-a="toggle-ribbon" title="Свернуть / развернуть ленту"><span data-i="chevUp" data-size="16"></span></button>
+  </nav>
+
+  <div class="ribbon glass" id="ribbon">
+    <!-- ГЛАВНАЯ -->
+    <div class="rpanel active" data-panel="home">
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="paste" title="Вставить (Ctrl+V)"><span data-i="paste" data-size="24"></span><span>Вставить</span></button>
+          <div class="rcol">
+            <button class="rb" data-a="cut" title="Вырезать (Ctrl+X)"><span data-i="cut"></span></button>
+            <button class="rb" data-a="copy" title="Копировать (Ctrl+C)"><span data-i="copy"></span></button>
+            <button class="rb" data-a="painter" title="Формат по образцу"><span data-i="brush"></span></button>
+          </div>
+          <div class="rcol">
+            <button class="rb" data-a="undo" title="Отменить (Ctrl+Z)"><span data-i="undo"></span></button>
+            <button class="rb" data-a="redo" title="Вернуть (Ctrl+Y)"><span data-i="redo"></span></button>
+          </div>
+        </div>
+        <div class="rg-label">Буфер обмена</div>
+      </div>
+
+      <div class="rgroup">
+        <div class="rg-body rg-rows">
+          <div class="rrow">
+            <button class="combo font-combo" data-a="font-menu" title="Шрифт"><span id="fontName">Calibri</span><span data-i="chevDown" data-size="14"></span></button>
+            <div class="combo size-combo"><input id="fontSize" value="11" inputmode="decimal" aria-label="Размер шрифта" title="Размер шрифта"><button data-a="size-menu" tabindex="-1" aria-label="Размеры"><span data-i="chevDown" data-size="14"></span></button></div>
+            <button class="rb txt" data-a="grow" title="Увеличить размер (Ctrl+])">A<sup>+</sup></button>
+            <button class="rb txt" data-a="shrink" title="Уменьшить размер (Ctrl+[)">A<sup>−</sup></button>
+            <button class="rb txt" data-a="case-menu" title="Регистр">Аа<span data-i="chevDown" data-size="11"></span></button>
+            <button class="rb" data-a="clear" title="Очистить всё форматирование"><span data-i="eraser"></span></button>
+          </div>
+          <div class="rrow">
+            <button class="rb txt b" data-cmd="bold" title="Полужирный (Ctrl+B)">Ж</button>
+            <button class="rb txt i" data-cmd="italic" title="Курсив (Ctrl+I)">К</button>
+            <button class="rb txt u" data-cmd="underline" title="Подчёркнутый (Ctrl+U)">Ч</button>
+            <button class="rb txt s" data-cmd="strikeThrough" title="Зачёркнутый">abc</button>
+            <button class="rb txt" data-cmd="subscript" title="Подстрочный (Ctrl+=)">x<sub>2</sub></button>
+            <button class="rb txt" data-cmd="superscript" title="Надстрочный (Ctrl+Shift+=)">x<sup>2</sup></button>
+            <div class="split">
+              <button class="rb" data-a="hilite" title="Цвет выделения текста"><span data-i="highlighter"></span><i class="swatch" id="hiliteSwatch" style="background:#ffff00"></i></button>
+              <button class="rb arrow" data-a="hilite-menu" aria-label="Цвета выделения"><span data-i="chevDown" data-size="11"></span></button>
+            </div>
+            <div class="split">
+              <button class="rb txt" data-a="color" title="Цвет текста"><span class="a-letter">A</span><i class="swatch" id="colorSwatch" style="background:#c00000"></i></button>
+              <button class="rb arrow" data-a="color-menu" aria-label="Цвета текста"><span data-i="chevDown" data-size="11"></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="rg-label">Шрифт</div>
+      </div>
+
+      <div class="rgroup">
+        <div class="rg-body rg-rows">
+          <div class="rrow">
+            <button class="rb" data-cmd="insertUnorderedList" title="Маркированный список"><span data-i="listUl"></span></button>
+            <div class="split">
+              <button class="rb" data-cmd="insertOrderedList" title="Нумерованный список"><span data-i="listOl"></span></button>
+              <button class="rb arrow" data-a="ol-menu" aria-label="Формат нумерации"><span data-i="chevDown" data-size="11"></span></button>
+            </div>
+            <button class="rb" data-a="checklist" title="Список задач"><span data-i="checklist"></span></button>
+            <button class="rb" data-a="outdent" title="Уменьшить отступ"><span data-i="outdent"></span></button>
+            <button class="rb" data-a="indent" title="Увеличить отступ"><span data-i="indent"></span></button>
+            <button class="rb" data-a="marks" title="Показать знаки абзацев"><span data-i="paragraph"></span></button>
+          </div>
+          <div class="rrow">
+            <button class="rb" data-cmd="justifyLeft" title="По левому краю (Ctrl+L)"><span data-i="alignLeft"></span></button>
+            <button class="rb" data-cmd="justifyCenter" title="По центру (Ctrl+E)"><span data-i="alignCenter"></span></button>
+            <button class="rb" data-cmd="justifyRight" title="По правому краю (Ctrl+R)"><span data-i="alignRight"></span></button>
+            <button class="rb" data-cmd="justifyFull" title="По ширине (Ctrl+J)"><span data-i="alignJustify"></span></button>
+            <button class="rb" data-a="spacing-menu" title="Интервал между строками и абзацами"><span data-i="lineSpacing"></span></button>
+            <button class="rb" data-a="shading-menu" title="Заливка абзаца"><span data-i="bucket"></span></button>
+          </div>
+        </div>
+        <div class="rg-label">Абзац <button class="launcher" data-a="paragraph" title="Параметры абзаца"><span data-i="chevRight" data-size="10"></span></button></div>
+      </div>
+
+      <div class="rgroup">
+        <div class="rg-body">
+          <div class="styles" id="styles"></div>
+        </div>
+        <div class="rg-label">Стили</div>
+      </div>
+
+      <div class="rgroup">
+        <div class="rg-body">
+          <div class="rcol wide">
+            <button class="rb-txt" data-a="find"><span data-i="search" data-size="16"></span>Найти</button>
+            <button class="rb-txt" data-a="replace"><span data-i="replace" data-size="16"></span>Заменить</button>
+            <button class="rb-txt" data-a="select-all"><span data-i="selectAll" data-size="16"></span>Выделить всё</button>
+          </div>
+        </div>
+        <div class="rg-label">Редактирование</div>
+      </div>
+    </div>
+
+    <!-- ВСТАВКА -->
+    <div class="rpanel" data-panel="insert">
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="pagebreak" title="Разрыв страницы (Ctrl+Enter)"><span data-i="pageBreak" data-size="24"></span><span>Разрыв<br>страницы</span></button>
+          <button class="rb-lg" data-a="toc" title="Оглавление по заголовкам"><span data-i="toc" data-size="24"></span><span>Оглав-<br>ление</span></button>
+        </div>
+        <div class="rg-label">Страницы</div>
+      </div>
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="table-menu" title="Таблица"><span data-i="table" data-size="24"></span><span>Таблица<span data-i="chevDown" data-size="11"></span></span></button>
+        </div>
+        <div class="rg-label">Таблицы</div>
+      </div>
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="image" title="Рисунок с устройства"><span data-i="image" data-size="24"></span><span>Рисунок</span></button>
+          <button class="rb-lg" data-a="image-url" title="Рисунок по ссылке"><span data-i="imageUrl" data-size="24"></span><span>Из интер-<br>нета</span></button>
+        </div>
+        <div class="rg-label">Иллюстрации</div>
+      </div>
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="link" title="Ссылка (Ctrl+K)"><span data-i="link" data-size="24"></span><span>Ссылка</span></button>
+        </div>
+        <div class="rg-label">Ссылки</div>
+      </div>
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="headerfooter" title="Верхний колонтитул"><span data-i="header" data-size="24"></span><span>Верхний<br>колонтитул</span></button>
+          <button class="rb-lg" data-a="headerfooter" title="Нижний колонтитул"><span data-i="footer" data-size="24"></span><span>Нижний<br>колонтитул</span></button>
+          <button class="rb-lg" data-a="pagenum-menu" title="Номер страницы"><span data-i="hash" data-size="24"></span><span>Номер<br>страницы</span></button>
+        </div>
+        <div class="rg-label">Колонтитулы</div>
+      </div>
+      <div class="rgroup">
+        <div class="rg-body">
+          <div class="rcol wide">
+            <button class="rb-txt" data-a="hr"><span data-i="hr" data-size="16"></span>Горизонтальная линия</button>
+            <button class="rb-txt" data-a="datetime-menu"><span data-i="calendar" data-size="16"></span>Дата и время</button>
+            <button class="rb-txt" data-a="checklist"><span data-i="checklist" data-size="16"></span>Список задач</button>
+          </div>
+          <button class="rb-lg" data-a="symbol-menu" title="Символ"><span data-i="omega" data-size="24"></span><span>Символ<span data-i="chevDown" data-size="11"></span></span></button>
+        </div>
+        <div class="rg-label">Текст и символы</div>
+      </div>
+    </div>
+
+    <!-- МАКЕТ -->
+    <div class="rpanel" data-panel="layout">
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="margins-menu"><span data-i="margins" data-size="24"></span><span>Поля<span data-i="chevDown" data-size="11"></span></span></button>
+          <button class="rb-lg" data-a="orient-menu"><span data-i="orientation" data-size="24"></span><span>Ориентация<span data-i="chevDown" data-size="11"></span></span></button>
+          <button class="rb-lg" data-a="size-page-menu"><span data-i="pageSize" data-size="24"></span><span>Размер<span data-i="chevDown" data-size="11"></span></span></button>
+          <button class="rb-lg" data-a="columns-menu"><span data-i="columns" data-size="24"></span><span>Колонки<span data-i="chevDown" data-size="11"></span></span></button>
+          <button class="rb-lg" data-a="pagebreak"><span data-i="pageBreak" data-size="24"></span><span>Разрыв</span></button>
+        </div>
+        <div class="rg-label">Параметры страницы</div>
+      </div>
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="redline" title="Отступ первой строки 1,25 см"><span data-i="indent" data-size="24"></span><span>Красная<br>строка</span></button>
+          <button class="rb-lg" data-a="paragraph"><span data-i="lineSpacing" data-size="24"></span><span>Отступы и<br>интервалы</span></button>
+        </div>
+        <div class="rg-label">Абзац</div>
+      </div>
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="pagecolor-menu"><span data-i="bucket" data-size="24"></span><span>Цвет<br>страницы</span></button>
+          <button class="rb-lg" data-a="headerfooter"><span data-i="header" data-size="24"></span><span>Колон-<br>титулы</span></button>
+        </div>
+        <div class="rg-label">Фон и колонтитулы</div>
+      </div>
+    </div>
+
+    <!-- РЕЦЕНЗИРОВАНИЕ -->
+    <div class="rpanel" data-panel="review">
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="spell" id="spellBtn"><span data-i="spell" data-size="24"></span><span>Орфо-<br>графия</span></button>
+          <button class="rb-lg" data-a="stats"><span data-i="stats" data-size="24"></span><span>Статис-<br>тика</span></button>
+        </div>
+        <div class="rg-label">Правописание</div>
+      </div>
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="speak" id="speakBtn"><span data-i="speaker" data-size="24"></span><span>Прочитать<br>вслух</span></button>
+        </div>
+        <div class="rg-label">Речь</div>
+      </div>
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="versions"><span data-i="history" data-size="24"></span><span>История<br>версий</span></button>
+        </div>
+        <div class="rg-label">Версии</div>
+      </div>
+    </div>
+
+    <!-- ВИД -->
+    <div class="rpanel" data-panel="view">
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="view-print" data-view="print"><span data-i="fileText" data-size="24"></span><span>Разметка<br>страницы</span></button>
+          <button class="rb-lg" data-a="view-web" data-view="web"><span data-i="web" data-size="24"></span><span>Веб-<br>документ</span></button>
+          <button class="rb-lg" data-a="view-read" data-view="read"><span data-i="book" data-size="24"></span><span>Режим<br>чтения</span></button>
+        </div>
+        <div class="rg-label">Режимы</div>
+      </div>
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="zoom-100"><span data-i="search" data-size="24"></span><span>100%</span></button>
+          <button class="rb-lg" data-a="zoom-fit"><span data-i="fitWidth" data-size="24"></span><span>По ширине</span></button>
+          <div class="rcol">
+            <button class="rb" data-a="zoom-in" title="Увеличить"><span data-i="zoomIn"></span></button>
+            <button class="rb" data-a="zoom-out" title="Уменьшить"><span data-i="zoomOut"></span></button>
+          </div>
+        </div>
+        <div class="rg-label">Масштаб</div>
+      </div>
+      <div class="rgroup">
+        <div class="rg-body">
+          <button class="rb-lg" data-a="marks"><span data-i="paragraph" data-size="24"></span><span>Знаки<br>абзацев</span></button>
+          <button class="rb-lg" data-a="darkpaper"><span data-i="moon" data-size="24"></span><span>Тёмная<br>бумага</span></button>
+          <button class="rb-lg" data-a="fullscreen"><span data-i="fullscreen" data-size="24"></span><span>Во весь<br>экран</span></button>
+        </div>
+        <div class="rg-label">Показать</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ctxbar glass" id="ctxBar" hidden></div>
+
+  <main class="workspace" id="workspace">
+    <div class="sheet" id="sheet">
+      <div class="hf hf-top" id="hfTop" data-a="headerfooter" title="Изменить колонтитулы"></div>
+      <div class="page-marks" id="pageMarks" aria-hidden="true"></div>
+      <div class="page-probe" id="pageProbe" aria-hidden="true"></div>
+      <article id="editor" class="doc editing" contenteditable="true" spellcheck="true" lang="ru" aria-label="Текст документа"></article>
+      <div class="hf hf-bottom" id="hfBottom" data-a="headerfooter" title="Изменить колонтитулы"></div>
+    </div>
+    <div class="loading-doc" id="loadingDoc"><div class="spinner"></div></div>
+  </main>
+
+  <footer class="statusbar glass">
+    <span id="stPage">Страница 1 из 1</span>
+    <span class="dot"></span>
+    <button class="st-btn" data-a="stats" id="stWords">0 слов</button>
+    <span class="dot hide-sm"></span>
+    <span class="hide-sm">Русский</span>
+    <span class="flex1"></span>
+    <div class="st-views hide-sm">
+      <button class="icon-btn sm" data-a="view-read" data-view="read" title="Режим чтения"><span data-i="book" data-size="16"></span></button>
+      <button class="icon-btn sm" data-a="view-print" data-view="print" title="Разметка страницы"><span data-i="fileText" data-size="16"></span></button>
+      <button class="icon-btn sm" data-a="view-web" data-view="web" title="Веб-документ"><span data-i="web" data-size="16"></span></button>
+    </div>
+    <button class="icon-btn sm" data-a="zoom-out" title="Уменьшить"><span data-i="minus" data-size="16"></span></button>
+    <input type="range" id="zoomRange" min="25" max="300" step="5" value="100" aria-label="Масштаб" class="hide-xs">
+    <button class="icon-btn sm" data-a="zoom-in" title="Увеличить"><span data-i="plus" data-size="16"></span></button>
+    <button class="st-btn zoom-val" data-a="zoom-menu" id="zoomVal">100%</button>
+  </footer>
+</div>
+
+<div class="find-panel glass-strong" id="findPanel" hidden>
+  <div class="fp-row">
+    <span data-i="search" data-size="16" class="muted"></span>
+    <input id="findInput" placeholder="Найти в документе" autocomplete="off">
+    <span class="fp-count" id="findCount"></span>
+    <button class="icon-btn sm" id="findPrev" title="Предыдущее (Shift+Enter)"><span data-i="chevUp" data-size="16"></span></button>
+    <button class="icon-btn sm" id="findNext" title="Следующее (Enter)"><span data-i="chevDown" data-size="16"></span></button>
+    <button class="icon-btn sm" id="findToggleReplace" title="Замена"><span data-i="replace" data-size="16"></span></button>
+    <button class="icon-btn sm" id="findClose" title="Закрыть (Esc)"><span data-i="x" data-size="16"></span></button>
+  </div>
+  <div class="fp-row" id="replaceRow" hidden>
+    <span data-i="replace" data-size="16" class="muted"></span>
+    <input id="replaceInput" placeholder="Заменить на" autocomplete="off">
+    <button class="btn btn-sm" id="replaceOne">Заменить</button>
+    <button class="btn btn-sm" id="replaceAll">Все</button>
+  </div>
+  <label class="check fp-opt"><input type="checkbox" id="findCase"> Учитывать регистр</label>
+</div>
+
+<div class="img-handle" id="imgHandle" hidden title="Потяните, чтобы изменить размер"></div>
+<div class="backstage" id="backstage" hidden></div>
+<input type="file" id="imgFile" accept="image/*" multiple hidden>
+<input type="file" id="importFile" accept=".docx,.txt,.html,.htm,.md" hidden>
+
+<script src="/js/icons.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/templates.js"></script>
+<script src="/js/import.js"></script>
+<script src="/js/docx.js"></script>
+<script src="/js/editor.js"></script>
+</body>
+</html>

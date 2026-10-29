@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Мои документы — CloWord</title>
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#5b6cff">
+<script src="/js/theme-init.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/pages.css">
+</head>
+<body class="dash-page">
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+<div class="dash">
+  <aside class="sidebar glass" id="sidebar">
+    <a class="brand" href="/app"><span class="logo" data-logo="34"></span><span>Clo<b>Word</b></span></a>
+    <button class="btn btn-primary btn-block new-btn" id="newBtn" type="button"><span data-i="plus"></span>Создать документ</button>
+    <nav class="side-nav">
+      <button class="nav-item active" data-view="all" type="button"><span data-i="fileText"></span>Все документы<span class="count" id="cntAll"></span></button>
+      <button class="nav-item" data-view="starred" type="button"><span data-i="star"></span>Избранное<span class="count" id="cntStar"></span></button>
+      <button class="nav-item" data-view="trash" type="button"><span data-i="trash"></span>Корзина<span class="count" id="cntTrash"></span></button>
+      <button class="nav-item" id="importBtn" type="button"><span data-i="upload"></span>Импорт файла</button>
+    </nav>
+    <div class="side-foot">
+      <div class="storage" id="storage"></div>
+      <button class="profile-card" id="profileBtn" type="button">
+        <span class="avatar" id="avatar">?</span>
+        <span class="pc-text"><b id="userName">…</b><span id="userEmail" class="muted"></span></span>
+        <span data-i="chevRight"></span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="dash-top">
+      <button class="icon-btn mobile-only" id="menuBtn" type="button" aria-label="Меню"><span data-i="menu"></span></button>
+      <div class="greet">
+        <h1 id="greeting">Добрый день</h1>
+        <p class="muted" id="subGreeting">Ваши документы хранятся в облаке и доступны на любом устройстве</p>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn glass" id="themeBtn" type="button"></button>
+        <button class="avatar mobile-only" id="avatarMobile" type="button">?</button>
+      </div>
+    </header>
+
+    <section class="templates" id="templatesSection">
+      <div class="section-head"><h2>Создать</h2></div>
+      <div class="tpl-row" id="templates"></div>
+    </section>
+
+    <section class="docs-section">
+      <div class="section-head docs-head">
+        <h2 id="listTitle">Все документы</h2>
+        <div class="docs-tools">
+          <div class="search glass"><span data-i="search" data-size="17"></span><input id="search" placeholder="Поиск документов" autocomplete="off"></div>
+          <button class="icon-btn glass" id="sortBtn" type="button" title="Сортировка"><span data-i="sort"></span></button>
+          <div class="seg seg-icons"><button type="button" data-layout="grid" class="active" title="Плитка"><span data-i="grid" data-size="16"></span></button><button type="button" data-layout="list" title="Список"><span data-i="rows" data-size="16"></span></button></div>
+          <button class="btn btn-sm btn-danger" id="emptyTrash" type="button" hidden><span data-i="trash" data-size="16"></span>Очистить корзину</button>
+        </div>
+      </div>
+      <div class="docs grid" id="docs"><div class="loading"><div class="spinner"></div></div></div>
+    </section>
+  </main>
+</div>
+
+<div class="drop-overlay" id="dropOverlay" hidden><div class="glass-strong"><span data-i="upload" data-size="40"></span><b>Отпустите файл для импорта</b><span class="muted">.docx, .txt, .html, .md</span></div></div>
+<input type="file" id="importFile" accept=".docx,.txt,.html,.htm,.md" hidden>
+
+<script src="/js/icons.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/templates.js"></script>
+<script src="/js/import.js"></script>
+<script src="/js/docx.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
